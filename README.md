@@ -8,10 +8,10 @@ and the RS(255,223) decoder.
 ## Mathematical Foundation
 
 ### Overview
-Reed-Solomon codes are maximum-distance-separable (MDS) codes widely used in space communications, data storage, and error correction applications. This implementation provides RS(255,223) encoding and decoding over the finite field GF(2^8), which is the CCSDS-standardized configuration for telemetry channel coding.
+Reed-Solomon codes are maximum-distance-separable (MDS) codes widely used in space communications, data storage, and error correction applications. This implementation provides $\text{RS}(255,223)$ encoding and decoding over the finite field $\mathbb{F}_{2^8}$, which is the CCSDS-standardized configuration for telemetry channel coding.
 
 ### Code Parameters
-This implementation targets the CCSDS Reed-Solomon code **RS(255,223)**, which operates over the finite field GF(2^8):
+This implementation targets the CCSDS Reed-Solomon code $\text{RS}(255,223)$, which operates over the finite field $\mathbb{F}_{2^8}$:
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
@@ -21,43 +21,43 @@ This implementation targets the CCSDS Reed-Solomon code **RS(255,223)**, which o
 | 2t = n - k | 32 | Number of parity check symbols |
 | t | 16 | Error-correction capability (symbol errors) |
 
-The code achieves the Singleton bound: `d = n - k + 1 = 33`, meaning it can correct up to 16 symbol errors or detect up to 32 errors. Each symbol represents 8 bits, so actual bit-level error correction depends on error patterns.
+The code achieves the Singleton bound: $d = n - k + 1 = 33$, meaning it can correct up to 16 symbol errors or detect up to 32 errors. Each symbol represents 8 bits, so actual bit-level error correction depends on error patterns.
 
-### Finite Field GF(2^8) Arithmetic
-All arithmetic is performed in the Galois field GF(2^8), where each element is represented as an 8-bit byte. The field is constructed via an irreducible polynomial (typically x^8 + x^4 + x^3 + x^2 + 1 in CCSDS). Multiplication and division are performed modulo this polynomial, with special lookup tables for efficiency.
+### Finite Field $\mathbb{F}_{2^8}$ Arithmetic
+All arithmetic is performed in the Galois field $\mathbb{F}_{2^8}$, where each element is represented as an 8-bit byte. The field is constructed via an irreducible polynomial (typically $x^8 + x^4 + x^3 + x^2 + 1$ in CCSDS). Multiplication and division are performed modulo this polynomial, with special lookup tables for efficiency.
 
 Two representations are supported:
 - **Conventional basis**: Standard polynomial basis representation used in many implementations
 - **Dual basis**: Faster arithmetic operations on hardware, required by some CCSDS interfaces
 
 ### Encoding Process
-The encoder accepts a message m(x) of degree at most k-1 and produces a codeword c(x) of degree at most n-1:
+The encoder accepts a message $m(x)$ of degree at most $k-1$ and produces a codeword $c(x)$ of degree at most $n-1$:
 
-1. **Message polynomial**: m(x) = m₀ + m₁x + ... + m_{k-1}x^{k-1}
-2. **Generator polynomial**: g(x) = ∏_{i=0}^{2t-1} (x - α^{b+i}), where α is a primitive root and b is a starting offset
-3. **Parity computation**: r(x) = (x^{2t} · m(x)) mod g(x)
-4. **Codeword**: c(x) = x^{2t} · m(x) + r(x) = x^{2t} · m(x) + remainder
+1. **Message polynomial**: $m(x) = m_0 + m_1 x + \cdots + m_{k-1}x^{k-1}$
+2. **Generator polynomial**: $g(x) = \prod_{i=0}^{2t-1} (x - \alpha^{b+i})$, where $\alpha$ is a primitive root and $b$ is a starting offset
+3. **Parity computation**: $r(x) = (x^{2t} \cdot m(x)) \bmod g(x)$
+4. **Codeword**: $c(x) = x^{2t} \cdot m(x) + r(x)$
 
-The result is a valid codeword divisible by g(x).
+The result is a valid codeword divisible by $g(x)$.
 
 ### Decoding Process
-The decoder receives a potentially corrupted word r(x) and recovers the original message m(x):
+The decoder receives a potentially corrupted word $r(x)$ and recovers the original message $m(x)$:
 
-1. **Syndrome computation**: S_i = r(α^{b+i}) for i = 0, ..., 2t-1
+1. **Syndrome computation**: $S_i = r(\alpha^{b+i})$ for $i = 0, \ldots, 2t-1$
    - If all syndromes are zero, no error is detected
    - Otherwise, syndromes encode error location and magnitude information
 
-2. **Key equation solving** (for t > 0 errors):
-   - Berlekamp–Massey algorithm computes the error-locator polynomial Λ(x)
-   - Chien search finds the roots of Λ(x) (error positions)
-   - Forney algorithm computes error magnitudes from syndromes and Λ(x)
+2. **Key equation solving** (for $t > 0$ errors):
+   - Berlekamp–Massey algorithm computes the error-locator polynomial $\Lambda(x)$
+   - Chien search finds the roots of $\Lambda(x)$ (error positions)
+   - Forney algorithm computes error magnitudes from syndromes and $\Lambda(x)$
 
 3. **Error correction**: Subtract computed error magnitudes from the received word at error positions
 
-4. **Message recovery**: Extract the first k symbols of the corrected codeword
+4. **Message recovery**: Extract the first $k$ symbols of the corrected codeword
 
 ### Basis Conversion
-CCSDS systems often interface between conventional and dual basis representations. This implementation explicitly handles conversion in both encoder and decoder paths for RS(255,223), ensuring interoperability with CCSDS-compliant systems.
+CCSDS systems often interface between conventional and dual basis representations. This implementation explicitly handles conversion in both encoder and decoder paths for $\text{RS}(255,223)$, ensuring interoperability with CCSDS-compliant systems.
 
 ## CCSDS Reference
 
