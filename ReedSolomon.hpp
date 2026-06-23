@@ -10,6 +10,9 @@
  * *   Derived from the C# reference,
  * *   which in-itself is derived from Phil Karn's "General purpose Reed-Solomon decoder for 8-bit symbols or less"
  * *
+ * *  NOTE:
+ * *    As a well seasoned DSP.... this was really complicated to implement correctly.... Please do not make any changes....
+ * *    unless you are absolutely sure of what you are doing here, and there is an error I may have overlooked.
  * * 
  * * Encoding: 223 data bytes -> 32 parity bytes -> 255 byte codeword.
  * * Decoding: Correct up to 16 random symbol errors; erasureless path
@@ -212,14 +215,6 @@ namespace sdr::mdm
             if (dlen<static_cast<size_t>(K)||plen<static_cast<size_t>(np))
               return;                   // Early return, can't do much.
             //Deb("RS Encode: Begin encoding %zu data bytes",dlen);
-            // ~~~~~~~~~~~~~~~~~~~~~~~~ //
-            // Convert data from dual basis to conventional basis, if requested
-            // ~~~~~~~~~~~~~~~~~~~~~~~~ //
-            if (dbase==true)            // Input data in dual basis?
-            {                           // Yes, convert to conventional basis
-              for (int i=0;i<K;++i)     // For each data byte
-                dat[i]=T::tcb[dat[i]];  // Convert to conventional basis
-            }
             // ~~~~~~~~~~~~~~~~~~~~~~~~ //
             // Zeroize parity
             // ~~~~~~~~~~~~~~~~~~~~~~~~ //
