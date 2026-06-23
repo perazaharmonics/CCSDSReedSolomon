@@ -1,5 +1,5 @@
 ## Description
-CCSDS GF(256) originally developed by Phil Karn (KA9Q) in conventional basis, then translated by Ryan Crosby to C#. 
+CCSDS GF(256) originally developed by Phil Karn (KA9Q) in C, then translated by Ryan Crosby to C#. 
 This was later translated by myself to C++, and extended to include the RS(255,223) decoder.
 
 ## Mathematical Foundation
