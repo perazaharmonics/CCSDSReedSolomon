@@ -1,6 +1,4 @@
-https://github.com/crozone/ReedSolomonCCSDS/tree/master
-"General purpose Reed-Solomon decoder for 8-bit symbols or less", Copyright 2003 Phil Karn, KA9Q
-
+## Description
 CCSDS GF(256) originally developed by Phil Karn (KA9Q) in conventional basis, then translated by crozone to C#. 
 This was later translated by myself to C++ and extended to convert from conventional basis to dual-basis in both the RS(255,223) encoder,
 and the RS(255,223) decoder.
@@ -66,3 +64,17 @@ Primary normative source:
 - CCSDS 131.0-B-5, TM Synchronization and Channel Coding (Blue Book), Consultative Committee for Space Data Systems.
 
 This standard defines the channel coding framework used in space telemetry links, including Reed-Solomon coding parameters and related interoperability requirements.
+
+### References
+https://github.com/crozone/ReedSolomonCCSDS/tree/master
+"General purpose Reed-Solomon decoder for 8-bit symbols or less", Copyright 2003 Phil Karn, KA9Q
+
+## Credits and Reference
+Thank you to all those that came before me, namely:
+
+Phil Karn KA9Q
+
+https://github.com/crozone
+
+
+
