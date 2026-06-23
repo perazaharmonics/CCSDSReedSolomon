@@ -1,7 +1,6 @@
 ## Description
-CCSDS GF(256) originally developed by Phil Karn (KA9Q) in conventional basis, then translated by crozone to C#. 
-This was later translated by myself to C++ and extended to convert from conventional basis to dual-basis in both the RS(255,223) encoder,
-and the RS(255,223) decoder.
+CCSDS GF(256) originally developed by Phil Karn (KA9Q) in conventional basis, then translated by Ryan Crosby to C#. 
+This was later translated by myself to C++, and extended to include the RS(255,223) decoder.
 
 ## Mathematical Foundation
 
@@ -74,6 +73,7 @@ Thank you to all those that came before me, namely:
 
 Phil Karn KA9Q
 
+Ryan Crosby @crozone
 https://github.com/crozone
 
 
