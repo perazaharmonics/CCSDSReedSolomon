@@ -26,8 +26,6 @@
  * *  https://github.com/crozone/ReedSolomonCCSDS/tree/master
  * *  "General purpose Reed-Solomon decoder for 8-bit symbols or less", Copyright 2003 Phil Karn, KA9Q
  * *
- * * Organization:
- * *  Trivium Solutions LLC, 9175 Guilford Rd, Suite 220, Columbia, MD 21046
  * *
  */
 #pragma once
